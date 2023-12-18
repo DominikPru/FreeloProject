@@ -22,7 +22,8 @@ export const store: Store<State> = createStore<State>({
       },
     ],
   },
-  actions: { // most actions call their corresponing mutation and save the data to local storage
+  actions: {
+    // most actions call their corresponing mutation and save the data to local storage
     loadTasks({ state }: { state: State }) {
       const storedTaskLists = localStorage.getItem("taskLists");
       if (storedTaskLists) {
@@ -69,7 +70,7 @@ export const store: Store<State> = createStore<State>({
     },
     removeTask(
       { commit, dispatch }: { commit: any; dispatch: any },
-      payload: { listIndex: number; taskIndex: number, isActive: boolean }
+      payload: { listIndex: number; taskIndex: number; isActive: boolean }
     ) {
       commit("removeTask", payload);
       dispatch("saveTasks");
@@ -93,6 +94,13 @@ export const store: Store<State> = createStore<State>({
       payload: { listIndex: number; taskIndex: number }
     ) {
       commit("unFinishTask", payload);
+      dispatch("saveTasks");
+    },
+    updateTasks(
+      { commit, dispatch }: { commit: any; dispatch: any },
+      payload: { listIndex: number; newTaskList: any[] }
+    ) {
+      commit("updateTasks", payload);
       dispatch("saveTasks");
     },
   },
@@ -126,13 +134,16 @@ export const store: Store<State> = createStore<State>({
     },
     removeTask(
       state: State,
-      payload: { listIndex: number; taskIndex: number, isActive: boolean }
+      payload: { listIndex: number; taskIndex: number; isActive: boolean }
     ) {
       console.log(payload);
       if (payload.isActive) {
         state.taskLists[payload.listIndex].tasks.splice(payload.taskIndex, 1);
       } else {
-        state.taskLists[payload.listIndex].finishedTasks.splice(payload.taskIndex, 1);
+        state.taskLists[payload.listIndex].finishedTasks.splice(
+          payload.taskIndex,
+          1
+        );
       }
     },
     editTaskList(
@@ -160,6 +171,12 @@ export const store: Store<State> = createStore<State>({
         1
       )[0];
       state.taskLists[payload.listIndex].tasks.push(task);
+    },
+    updateTasks(
+      state: State,
+      payload: { listIndex: number; newTaskList: any[] }
+    ) {
+      state.taskLists[payload.listIndex].tasks = payload.newTaskList;
     },
   },
 });

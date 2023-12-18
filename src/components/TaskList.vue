@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Task from "./Task.vue";
 import ListNavbar from "./ListNavbar.vue";
+import draggable from "vuedraggable";
 
 const props = defineProps({
   id: Number,
@@ -8,7 +9,12 @@ const props = defineProps({
   name: String,
 });
 
-const emit = defineEmits(["addTaskToList", "editTaskList", "editTask"]);
+const emit = defineEmits([
+  "addTaskToList",
+  "editTaskList",
+  "editTask",
+  "updateTasks",
+]);
 
 const handleEditTask = (taskIndex: any) => {
   emit("editTask", taskIndex);
@@ -27,15 +33,22 @@ const handleEditTask = (taskIndex: any) => {
       v-if="props.taskList && props.taskList.isOpen"
       class="bg-dark-foreground rounded p-4"
     >
-      <Task
-        v-for="(task, index) in props.taskList.tasks"
-        :key="index"
-        :name="task"
-        :id="index"
-        :listId="props.id"
-        :isActive="true"
-        @editTask="handleEditTask"
-      />
+      <draggable
+        v-model="props.taskList.tasks"
+        group="tasks"
+        @change="emit('updateTasks', props.taskList.tasks)"
+      >
+        <template #item="{ element, index }">
+          <Task
+            :name="element"
+            :id="index"
+            :listId="props.id"
+            :isActive="true"
+            @editTask="handleEditTask"
+            class="cursor-move"
+          />
+        </template>
+      </draggable>
       <Task
         v-for="(task, index) in props.taskList.finishedTasks"
         :key="index"
