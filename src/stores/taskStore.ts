@@ -23,7 +23,7 @@ export const store: Store<State> = createStore<State>({
     ],
   },
   actions: {
-    // most actions call their corresponing mutation and save the data to local storage
+    // most actions call their corresponding mutation and save the data to local storage
     loadTasks({ state }: { state: State }) {
       const storedTaskLists = localStorage.getItem("taskLists");
       if (storedTaskLists) {

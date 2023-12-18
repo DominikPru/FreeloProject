@@ -170,6 +170,7 @@ onMounted(async () => {
     </div>
     <div class="grid grid-cols-1 place-items-center py-10 px-5">
       <TaskList
+        v-if="searchResults.length === 0"
         v-for="(taskList, index) in store.state.taskLists"
         :id="index"
         :taskList="taskList"
@@ -198,6 +199,7 @@ onMounted(async () => {
         @updateTasks="(newTasks) => updateTasks(newTasks, index)"
       />
       <TaskList
+        v-else
         v-for="(taskList, index) in searchResults"
         :key="index"
         :id="index"
