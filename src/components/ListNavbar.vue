@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useStore } from "vuex";
-import { defineProps, defineEmits } from "vue";
 
 const store = useStore();
 
@@ -71,9 +70,9 @@ const emit = defineEmits(["addTaskToList", "editTaskList"]);
         fill="currentColor"
         class="w-6 h-6 cursor-pointer ml-3"
         @click="store.dispatch('toggleTaskList', props.id)"
-      >
+        >
         <path
-          v-if="store.state.taskLists[props.id].isOpen"
+          v-if="props.id !== undefined && store.state.taskLists[props.id]?.isOpen"
           fill-rule="evenodd"
           d="M11.47 7.72a.75.75 0 011.06 0l7.5 7.5a.75.75 0 11-1.06 1.06L12 9.31l-6.97 6.97a.75.75 0 01-1.06-1.06l7.5-7.5z"
           clip-rule="evenodd"

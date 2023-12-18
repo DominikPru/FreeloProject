@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Task from "./Task.vue";
 import ListNavbar from "./ListNavbar.vue";
-import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
   id: Number,

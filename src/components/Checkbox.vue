@@ -25,7 +25,6 @@
 
 <script setup lang="ts">
 import { watch, ref } from "vue";
-import { defineProps } from "vue";
 
 const props = defineProps({
   isChecked: Boolean,
