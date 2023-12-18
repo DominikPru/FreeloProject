@@ -1,29 +1,52 @@
 <script setup lang="ts">
-import Task from './Task.vue';
-import ListNavbar from './ListNavbar.vue';
-import { useStore } from 'vuex';
-import { defineProps } from 'vue';
+import Task from "./Task.vue";
+import ListNavbar from "./ListNavbar.vue";
+import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
-  id: Number
+  id: Number,
+  taskList: Object,
+  name: String,
 });
 
-const store = useStore();
+const emit = defineEmits(["addTaskToList", "editTaskList", "editTask"]);
+
+const handleEditTask = (taskIndex: any) => {
+  emit("editTask", taskIndex);
+};
 </script>
 
 <template>
   <div class="w-full lg:w-3/5 rounded text-white-primary mb-10">
-    <ListNavbar :id="props.id"/>
-    <div v-if="props.id !== undefined && store.state.taskLists[props.id] && store.state.taskLists[props.id].isOpen" class="bg-dark-foreground rounded p-4">
-      <Task 
-        v-for="(task, index) in store.state.taskLists[props.id].tasks" 
-        :key="index" 
-        :name="task" 
+    <ListNavbar
+      :id="props.id"
+      :name="name"
+      @addTaskToList="emit('addTaskToList')"
+      @editTaskList="emit('editTaskList')"
+    />
+    <div
+      v-if="props.taskList && props.taskList.isOpen"
+      class="bg-dark-foreground rounded p-4"
+    >
+      <Task
+        v-for="(task, index) in props.taskList.tasks"
+        :key="index"
+        :name="task"
+        :id="index"
+        :listId="props.id"
+        :isActive="true"
+        @editTask="handleEditTask"
+      />
+      <Task
+        v-for="(task, index) in props.taskList.finishedTasks"
+        :key="index"
+        :name="task"
+        :id="index"
+        :listId="props.id"
+        :isActive="false"
+        @editTask="handleEditTask"
       />
     </div>
     <div v-else></div>
   </div>
 </template>
-
-<style scoped>
-</style>
