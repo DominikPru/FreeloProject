@@ -45,7 +45,7 @@ const handleEditTask = (taskIndex: any) => {
             :listId="props.id"
             :isActive="true"
             @editTask="handleEditTask"
-            class="cursor-grab"
+            class="cursor-grab active:cursor-grabbing"
           />
         </template>
       </draggable>
