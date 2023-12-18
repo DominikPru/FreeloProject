@@ -86,8 +86,6 @@ function updateTasks(newTaskList: any, listIndex: number) {
     listIndex: listIndex,
     newTaskList: newTaskList,
   });
-  console.log(newTaskList);
-  console.log(listIndex);
 }
 
 onMounted(async () => {
