@@ -62,10 +62,10 @@ function searchTasks(searchTerm: string) {
   searchResults.value = [];
   store.state.taskLists.forEach((taskList: any) => {
     const matchingTasks = taskList.tasks.filter((task: any) =>
-      task.includes(searchTerm)
+      task.toLowerCase().includes(searchTerm.toLowerCase())
     );
     const matchingFinishedTasks = taskList.finishedTasks.filter((task: any) =>
-      task.includes(searchTerm)
+      task.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     if (matchingTasks.length > 0 || matchingFinishedTasks.length > 0) {
