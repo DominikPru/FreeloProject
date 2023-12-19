@@ -16,6 +16,13 @@ let searchResults = ref<
   { name: string; tasks: string[]; isOpen: boolean; finishedTasks: string[] }[]
 >([]);
 
+interface TaskList {
+  isOpen: boolean;
+  name: string;
+  finishedTasks: string[];
+  tasks: string[];
+}
+
 function openDialog(
   label: string,
   action: string,
@@ -60,11 +67,11 @@ function editTaskList(listName: string, listIndex: number) {
 
 function searchTasks(searchTerm: string) {
   searchResults.value = [];
-  store.state.taskLists.forEach((taskList: any) => {
-    const matchingTasks = taskList.tasks.filter((task: any) =>
+  store.state.taskLists.forEach((taskList: TaskList) => {
+    const matchingTasks = taskList.tasks.filter((task: string) =>
       task.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    const matchingFinishedTasks = taskList.finishedTasks.filter((task: any) =>
+    const matchingFinishedTasks = taskList.finishedTasks.filter((task: string) =>
       task.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -81,7 +88,7 @@ function searchTasks(searchTerm: string) {
   closeDialog();
 }
 
-function updateTasks(newTaskList: any, listIndex: number) {
+function updateTasks(newTaskList: TaskList, listIndex: number) {
   store.dispatch("updateTasks", {
     listIndex: listIndex,
     newTaskList: newTaskList,

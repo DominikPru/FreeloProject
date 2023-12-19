@@ -16,7 +16,7 @@ const emit = defineEmits([
   "updateTasks",
 ]);
 
-const handleEditTask = (taskIndex: any) => {
+const handleEditTask = (taskIndex: number) => {
   emit("editTask", taskIndex);
 };
 </script>

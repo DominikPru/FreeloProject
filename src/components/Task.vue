@@ -16,7 +16,7 @@ const emit = defineEmits(["editTask"]);
 
 const isChecked = ref(false);
 
-const updateCheckbox = (value: any) => {
+const updateCheckbox = (value: boolean) => {
   isChecked.value = value;
 };
 
