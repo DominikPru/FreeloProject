@@ -1,8 +1,8 @@
 import { createStore, Store } from "vuex";
 
 interface TaskList {
-  tasks: any[];
-  finishedTasks: any[];
+  tasks: any[string];
+  finishedTasks: any[string];
   isOpen: boolean;
   name: string;
 }

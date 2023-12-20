@@ -11,9 +11,9 @@ export default {
         "action-primary": "#00ADB5",
       },
       fontFamily: {
-        sans: ["afacad", "sans-serif"], // Make 'afacad' the default sans-serif font
-        serif: ["afacad", "serif"], // Make 'afacad' the default serif font
-        mono: ["afacad", "Monaco"], // Make 'afacad' the default monospace font
+        sans: ["afacad", "sans-serif"], 
+        serif: ["afacad", "serif"], 
+        mono: ["afacad", "Monaco"],
       },
     },
   },

@@ -30,7 +30,7 @@ const props = defineProps({
   isChecked: Boolean,
 });
 
-const checked = ref(props.isChecked);
+const checked = ref<boolean>(props.isChecked);
 
 watch(
   () => props.isChecked,

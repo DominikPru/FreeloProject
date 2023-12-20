@@ -7,11 +7,12 @@ import { ref } from "vue";
 
 const store = useStore();
 
-const isDialogOpen = ref(false);
-const dialogLabel = ref("");
-const dialogAction = ref("");
-const dialogListIndex = ref();
-const dialogTaskIndex = ref();
+const isDialogOpen = ref<boolean>(false);
+const dialogLabel = ref<string>("");
+const dialogAction = ref<string>("");
+const dialogListIndex = ref<number | null>();
+const dialogTaskIndex = ref<number | null>();
+let errorMessage = ref<string>("");
 let searchResults = ref<
   { name: string; tasks: string[]; isOpen: boolean; finishedTasks: string[] }[]
 >([]);
@@ -85,6 +86,12 @@ function searchTasks(searchTerm: string) {
     }
   });
   searchResults.value = searchResults.value;
+  if (searchResults.value.length === 0) {
+    errorMessage.value = "ERROR: No results found";
+  }
+  else {
+    errorMessage.value = "";
+  }
   closeDialog();
 }
 
@@ -109,8 +116,8 @@ onMounted(async () => {
       <Dialog
         :label="dialogLabel"
         :action="dialogAction"
-        :listIndex="dialogListIndex"
-        :taskIndex="dialogTaskIndex"
+        :listIndex="(dialogListIndex as number)"
+        :taskIndex="(dialogTaskIndex as number)"
         @cancel="closeDialog"
         @addList="addTaskList"
         @addTask="addTaskToList"
@@ -175,7 +182,10 @@ onMounted(async () => {
         />
       </svg>
     </div>
-    <div class="grid grid-cols-1 place-items-center py-10 px-5">
+    <div class="flex justify-center">
+    <span class="text-rose-600 mt-6 cursor-pointer" @click="errorMessage = ''">{{ errorMessage }}</span>
+    </div>
+    <div class="grid grid-cols-1 place-items-center py-5 px-5">
       <TaskList
         v-if="searchResults.length === 0"
         v-for="(taskList, index) in store.state.taskLists"

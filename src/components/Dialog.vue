@@ -42,8 +42,8 @@ import { ref, onMounted, onUnmounted } from "vue";
 const props = defineProps({
   label: String,
   action: String,
-  listIndex: String,
-  taskIndex: String,
+  listIndex: Number,
+  taskIndex: Number,
 });
 
 const text = ref("");
